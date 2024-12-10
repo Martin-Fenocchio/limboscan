@@ -14,8 +14,11 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen>
     with WidgetsBindingObserver {
+  bool _isScanning = true;
+
   void _handleBarcode(BarcodeCapture barcodes) {
-    if (mounted) {
+    if (_isScanning && mounted) {
+      _isScanning = false;
       context.read<UrlsCubit>().goToUrlProfile(
           url: barcodes.barcodes.firstOrNull?.displayValue ?? '',
           context: context);
